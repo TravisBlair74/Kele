@@ -1,6 +1,7 @@
 require 'httparty'
 
 class Kele
+  include HTTParty
   attr_accessor :api_url, :auth_token
 
   def initialize(email, password)
