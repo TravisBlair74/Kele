@@ -10,7 +10,7 @@ class Kele
     @auth_token = HTTParty.post(@api_url, body: {email: email, password: password}).parsed_response["auth_token"]
 
     if @auth_token==nil || @auth_token==false
-      puts "Invalid credentials"
+      raise ArgumentError.new("That user has invalid credentials")
     end
   end
 
