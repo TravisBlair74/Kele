@@ -14,7 +14,7 @@ class Kele
   end
 
   def get_me
-    response = HTTParty.get(@api_url, headers: { "authorization" => @auth_token })
+    response = HTTParty.get('https://www.bloc.io/api/v1/users/me', headers: { "authorization" => @auth_token })
     JSON.parse(response.body)
   end
 
