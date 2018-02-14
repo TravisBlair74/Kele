@@ -1,17 +1,21 @@
 require 'httparty'
+require 'json'
 
 class Kele
   include HTTParty
+  include JSON
+
   attr_accessor :api_url, :auth_token
 
   def initialize(email, password)
-
     @api_url = 'https://www.bloc.io/api/v1'
-    @auth_token = HTTParty.post(@api_url, body: {email: email, password: password}).parsed_response["auth_token"]
+    @auth_token = HTTParty.post('https://www.bloc.io/api/v1/sessions', body: {email: email, password: password}).parsed_response["auth_token"]
 
-    if @auth_token==nil || @auth_token==false
-      raise ArgumentError.new("That user has invalid credentials")
-    end
+  end
+
+  def get_me
+    response = HTTParty.get(@api_url, headers: { "authorization" => @auth_token })
+    JSON.parse(response.body)
   end
 
 end
