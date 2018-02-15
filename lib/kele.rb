@@ -28,4 +28,18 @@ class Kele
     JSON.parse(response.body)
   end
 
+  def get_messages(page = nil)
+    if page != nil
+      response = HTTParty.get("https://www.bloc.io/api/v1/message_threads", headers: { "authorization" => @auth_token }, body: { "page": page })
+    else
+      response = HTTParty.get("https://www.bloc.io/api/v1/message_threads", headers: { "authorization" => @auth_token })
+    end
+
+    JSON.parse(response.body)
+  end
+
+  def create_message(sender, recipient_id, token, subject, stripped_text)
+    HTTParty.post('https://www.bloc.io/api/v1/messages', headers: { "authorization" => @auth_token }, body: { "sender": sender, "recipient_id": recipient_id, "token": token, "subject": subject, "stripped-text": stripped_text })
+  end
+
 end
